@@ -1,0 +1,37 @@
+/*!
+   * Private helper function that binds or invokes a hander for `down`, `up',
+   * or `press` for a `Key`.
+   *
+   * @param {Key} key
+   * @param {string} handlerName
+   * @param {function=} opt_handler If omitted, the handler is invoked.
+   * @param {KeyboardEvent=} opt_evt If this function is being called by a
+   * keyboard event handler, this is the raw KeyboardEvent Object provided from
+   * the browser.
+   */
+
+/*!
+   * The function to be invoked on every tick that the key is held down for.
+   *
+   * @type {function}
+   */
+
+/*!
+   * The function to be invoked when the key is pressed.
+   *
+   * @type {function}
+   */
+
+/*!
+   * The function to be invoked when the key is released.
+   *
+   * @type {function}
+   */
+
+/*! keydrown - v1.2.8 - 2020-10-01 - http://jeremyckahn.github.com/keydrown */
+
+/**
+ * @license
+ * Copyright 2010-2021 Three.js Authors
+ * SPDX-License-Identifier: MIT
+ */

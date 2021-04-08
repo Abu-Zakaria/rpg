@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "serve": "webpack serve --content-base public",
-    "watch": "webpack watch",
+    "build": "webpack --env production --progress",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server"
   },
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "cannon": "^0.6.2",
+    "keydrown": "^1.2.8",
     "three": "^0.127.0"
   },
   "devDependencies": {
