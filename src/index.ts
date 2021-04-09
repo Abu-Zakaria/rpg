@@ -2,6 +2,7 @@ import Scene from './scene.ts';
 import Camera from './camera.ts';
 import Renderer from './renderer.ts';
 import Cannon from './cannon.ts';
+import FirstPersonPerspective from './firstPersonPerspective.ts';
 import Ground from './environments/ground.ts';
 import AmbientLight from './environments/ambient_light.ts';
 import MainLight from './environments/main_light.ts';
@@ -31,7 +32,10 @@ ambient_light.init()
 let main_light : MainLight = new MainLight(scene)
 main_light.init()
 
-let player : Player = new Player(scene)
+let player : Player = new Player(scene, camera)
 ground.onLoad(() => {
 	player.make()
 })
+
+let firstPersonPerspective = new FirstPersonPerspective(camera, renderer)
+firstPersonPerspective.initPointerLock()

@@ -3,7 +3,7 @@ import Initializable from './contracts/initializable.ts'
 
 export default class Camera implements Initializable
 {
-	private camera! : Camera;
+	private camera! : any;
 	private pov: number = 60;
 	private aspectRatio: number = window.innerWidth / window.innerHeight;
 	private near: number = 0.1;
@@ -25,5 +25,12 @@ export default class Camera implements Initializable
 	get(): Camera
 	{
 		return this.camera;
+	}
+
+	updatePosition(position: any): void
+	{
+		this.camera.position.x = position.x
+		this.camera.position.y = position.y
+		this.camera.position.z = position.z
 	}
 }

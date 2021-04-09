@@ -4,12 +4,14 @@ const KeyDrown = require('keydrown')
 const GUI = require('../../node_modules/three/examples/jsm/libs/dat.gui.module.js')
 
 import Scene from '../scene.ts'
+import Camera from '../camera.ts'
 
 export default class Player
 {
 	private body_size : any = new THREE.Vector3(1, 3, 0.5)
 	private body_scale: any = new THREE.Vector3(0.5, 0.5, 0.5)
 	private scene! : any;
+	private camera! : any;
 	private position : any = new THREE.Vector3(0, 3, 0);
 	private mass: number = 1;
 	private gui! : any;
@@ -21,9 +23,10 @@ export default class Player
 	private movingBack: boolean = false;
 	private movingRight: boolean = false;
 
-	constructor(scene: Scene)
+	constructor(scene: Scene, camera: Camera)
 	{
 		this.scene = scene
+		this.camera = camera
 		// let position = this.gui.addFolder('position')
 		// position.add(this.position, "y", 0, 10)
 		// position.open()
@@ -128,10 +131,20 @@ export default class Player
 		{
 			this.cannon_body.position.x += this.movement_speed;
 		}
+
+		if(this.movingForward || this.movingRight || this.movingLeft || this.movingBack)
+		{
+			this.updateCamera()
+		}
 	}
 
 	private jump()
 	{
 		this.cannon_body.velocity.y = this.mass + 3
+	}
+
+	private updateCamera(): any
+	{
+		this.camera.updatePosition(this.cannon_body.position)
 	}
 }

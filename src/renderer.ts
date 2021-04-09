@@ -12,6 +12,7 @@ export default class Renderer implements Initializable
 	private camera: Camera;
 	private cannon: Cannon;
 	private renderer! : any;
+	private playground_el!: SelectPlayground;
 	private width: number = window.innerWidth;
 	private height: number = window.innerHeight;
 	private playground_id: string = 'playground'
@@ -33,13 +34,13 @@ export default class Renderer implements Initializable
 
 		this.renderer.setSize(this.width, this.height);
 
-		const playground_el: SelectPlayground = {
+		this.playground_el = {
 			element: document.getElementById(this.playground_id)
 		}
 
-		if(playground_el.element != null)
+		if(this.playground_el.element != null)
 		{
-			playground_el.element.appendChild(this.renderer.domElement)
+			this.playground_el.element.appendChild(this.renderer.domElement)
 		}
 	}
 
@@ -63,6 +64,11 @@ export default class Renderer implements Initializable
 		Event.fire('ticks')
 
 		this.renderer.render(this.scene.get(), this.camera.get())
+	}
+
+	getPlayground(): any
+	{
+		return this.playground_el
 	}
 }
 
