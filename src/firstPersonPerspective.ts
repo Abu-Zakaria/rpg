@@ -26,4 +26,9 @@ export default class FirstPersonPerspective
 			_this.pointerLock.lock();
 		})
 	}
+
+	getControl()
+	{
+		return this.pointerLock
+	}
 }

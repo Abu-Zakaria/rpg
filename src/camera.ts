@@ -8,8 +8,8 @@ export default class Camera implements Initializable
 	private aspectRatio: number = window.innerWidth / window.innerHeight;
 	private near: number = 0.1;
 	private far: number = 1000;
-	private position: any = new THREE.Vector3(0, 3, 4)
-	private lookAt: any = new THREE.Vector3(0, 0, 0)
+	private position: any = new THREE.Vector3(0, 2, 1)
+	private lookAt: any = new THREE.Vector3(0, 0, 100)
 
 	init(): any 
 	{

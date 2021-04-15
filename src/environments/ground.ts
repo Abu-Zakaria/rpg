@@ -2,10 +2,11 @@ const THREE = require('three')
 
 import Initializable from '../contracts/initializable.ts'
 import Loadable from '../contracts/loadable.ts'
+import Object from '../object.ts'
 import Scene from '../scene.ts'
 import Cannon from '../cannon.ts'
 
-export default class Ground implements Initializable, Loadable
+export default class Ground extends Object implements Initializable, Loadable
 {
 	private scene! : Scene;
 	private cannon! : Cannon;
@@ -20,6 +21,7 @@ export default class Ground implements Initializable, Loadable
 
 	constructor(scene: Scene, cannon: Cannon)
 	{
+		super()
 		this.scene = scene
 		this.cannon = cannon
 	}
@@ -36,12 +38,15 @@ export default class Ground implements Initializable, Loadable
 		texture_loader.load(this.texture, (texture: any) => {
 			texture.encoding = THREE.sRGBEncoding
 			texture.wrapS = texture.wrapT = THREE.RepeatWrapping
-			texture.repeat.set(_this.width / 1, _this.depth / 1)
+			texture.repeat.set(_this.width / 3, _this.depth / 3)
 
 			let geometry = _this.getGeometry()
 			let material = _this.getMaterial(texture)
 
 			_this.ground_mesh = new THREE.Mesh(geometry, material)
+
+			_this.ground_mesh.receiveShadow = true
+			// _this.ground_mesh.castShadow = true
 
 			_this.scene.add(_this.ground_mesh)
 
@@ -49,6 +54,9 @@ export default class Ground implements Initializable, Loadable
 
 			_this.isLoaded = true;
 			_this.onLoadFunc()
+
+			console.log('ground', _this.ground_mesh)
+			Object.addObject(_this.ground_mesh)
 		})
 	}
 
@@ -59,7 +67,7 @@ export default class Ground implements Initializable, Loadable
 
 	getMaterial(texture: any)
 	{
-		return new THREE.MeshStandardMaterial({map: texture})
+		return new THREE.MeshStandardMaterial({map: texture, metalness: 0.2})
 	}
 
 	addPhysics(): void

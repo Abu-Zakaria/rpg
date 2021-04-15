@@ -7,7 +7,7 @@ import Scene from '../scene.ts'
 export default class AmbientLight implements Initializable, LightInterface
 {
 	private color: any = new THREE.Color("rgb(255, 255, 255)");
-	private intensity: number = 1;
+	private intensity: number = 0.6;
 	private scene: Scene;
 
 	constructor(scene: Scene)

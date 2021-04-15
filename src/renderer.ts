@@ -16,7 +16,7 @@ export default class Renderer implements Initializable
 	private width: number = window.innerWidth;
 	private height: number = window.innerHeight;
 	private playground_id: string = 'playground'
-	private fps: number = 20;
+	private cannon_steps: number = 50;
 	private anti_alias: boolean = true;
 
 	constructor(scene: Scene, camera: Camera, cannon: Cannon)
@@ -31,6 +31,11 @@ export default class Renderer implements Initializable
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: this.anti_alias
 		})
+
+		this.renderer.shadowMap.enabled = true;
+		this.renderer.shadowMap.type = true;
+
+		this.renderer.outputEncoding = THREE.sRGBEncoding
 
 		this.renderer.setSize(this.width, this.height);
 
@@ -51,15 +56,13 @@ export default class Renderer implements Initializable
 		this.animate()
 	}
 
-	private animate()
+	animate()
 	{
 		let _this = this
 
-		setTimeout(() => {
-			_this.animate()
-		}, this.fps)
+		requestAnimationFrame(() => { return _this.animate() })
 
-		this.cannon.step(this.fps)
+		this.cannon.step(this.cannon_steps)
 
 		Event.fire('ticks')
 
