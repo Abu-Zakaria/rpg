@@ -26,6 +26,7 @@ export default class Player
 	private sprinting : boolean = false
 	private player_height : number = 2;
 	private main_light! : any;
+	private last_position! : any;
 
 	private movingForward: boolean = false;
 	private movingLeft: boolean = false;
@@ -146,9 +147,11 @@ export default class Player
 			return;
 		}
 
-		const onObject = this.detectVerticalIntersection(raycaster) > 0
+		let objects = Object.keys(XObject.getObjects()).map((key) => {
+			return XObject.getObjects()[key]
+		})
 
-		let horz_intersection = this.detectHorizontalIntersection()
+		const onObject = this.detectVerticalIntersection(raycaster, objects) > 0
 
 		let movement_speed = this.movement_speed
 
@@ -182,8 +185,8 @@ export default class Player
 			this.canJump = false
 		}
 
-		this.control.moveRight(this.velocity.x * delta)
 		this.control.moveForward(this.velocity.z * delta)
+		this.control.moveRight(this.velocity.x * delta)
 
 		this.control.getObject().position.y += this.velocity.y * delta
 
@@ -206,48 +209,24 @@ export default class Player
 		this.main_light = main_light
 	}
 
+	getHeight()
+	{
+		return this.player_height
+	}
+
 	private jump()
 	{
 		if(this.canJump == true)
 		{
-			this.velocity.y = 20 / this.mass
+			this.velocity.y = 30 / this.mass
 		}
 		this.canJump = false
 	}
 
-	private detectVerticalIntersection(raycaster : any) : number
+	private detectVerticalIntersection(raycaster : any, objects: any) : number
 	{
 		raycaster.ray.origin.copy(this.control.getObject().position)
 
-		let objects = Object.keys(XObject.getObjects()).map((key) => {
-			return XObject.getObjects()[key]
-		})
-
 		return raycaster.intersectObjects(objects).length
-	}
-
-	private detectHorizontalIntersection() : any
-	{
-		let position = this.control.getObject().position.clone()
-		// +x
-		position.y = 1
-
-		let raycaster = new THREE.Raycaster( position,
-			new THREE.Vector3(0, 0, 1), 0, this.player_height );
-
-		let objects = Object.keys(XObject.getObjects()).map((key) => {
-			return XObject.getObjects()[key]
-		})
-
-		console.log('asd', raycaster)
-		console.log('aaaaaa',  raycaster.intersectObjects(objects))
-		if(raycaster.intersectObjects(objects).length > 0)
-		{
-			console.log('worked')
-		}
-
-		return {
-			z : true
-		}
 	}
 }

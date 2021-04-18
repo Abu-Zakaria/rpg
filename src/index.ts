@@ -10,6 +10,7 @@ import Ground from './environments/ground.ts';
 import AmbientLight from './environments/ambient_light.ts';
 import MainLight from './environments/main_light.ts';
 import Tree from './environments/tree.ts';
+import Sky from './environments/sky.ts';
 import Player from './characters/player.ts';
 import '../css/style.scss'
 
@@ -44,24 +45,17 @@ ground.onLoad(() => {
 	player.setFPP(firstPersonPerspective)
 	player.addMainLight(main_light)
 	player.make()
-	let geo = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2)
-	let material = new THREE.MeshPhongMaterial({color: 0x000000})
-
-	let mesh = new THREE.Mesh(geo, material)
-	mesh.castShadow = true
-	mesh.receiveShadow = true
-
-	mesh.position.x = 10
-	mesh.position.y = 1
-	mesh.position.z = 10
-
-	mesh.name = 'testing'
-
-	scene.add(mesh)
-
-	Object.addObject(mesh)
 })
 
 const tree : Tree = new Tree(scene)
 
 tree.init()
+
+tree.onLoad(() => {
+
+	tree.setupTrees()
+})
+
+const sky = new Sky(scene)
+
+sky.init()

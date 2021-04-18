@@ -10,33 +10,43 @@ export default class MainLight implements Initializable, LightInterface
 	private color : any = new THREE.Color("rgb(224, 224, 224)");
 	private intensity : number = 1;
 	private scene! : any;
-	private position : any = new THREE.Vector3(15, 30, 0)
+	private position : any = new THREE.Vector3(25, 15, 80)
 
 	constructor(scene: Scene)
 	{
 		this.scene = scene
+
+		let _this = this
+		// document.addEventListener('ticks', () => {
+		// 	_this.light.position
+		// })
 	}
 
 	init()
 	{
-		this.light = new THREE.SpotLight(this.color, this.intensity)
+		this.light = new THREE.DirectionalLight(this.color, this.intensity)
 
 		this.light.position.set(this.position.x, this.position.y, this.position.z)
 
 		this.light.castShadow = true
 
-		this.light.intensity = 1.6
-		this.light.angle = Math.PI / 3
-		this.light.penumbra = 0
-		this.light.distance = 2000
-		this.light.focus = 1
-		this.light.decay = 1
+		// this.light.intensity = 1.6
+		// this.light.angle = Math.PI / 3
+		// this.light.penumbra = 0
+		// this.light.distance = 2000
+		// this.light.focus = 1
+		// this.light.decay = 1
 
-		this.light.shadow.mapSize.width = 1024
-		this.light.shadow.mapSize.height = 1024
-		this.light.shadow.camera.near = 0.1
-		this.light.shadow.camera.far = 20
-		this.light.shadow.camera.fov = 90
+		this.light.shadow.mapSize.width = 2048
+		this.light.shadow.mapSize.height = 2048
+		this.light.shadow.camera.near = 0
+		this.light.shadow.camera.far = (this.position.y + this.position.x + this.position.z) * 1.5
+		this.light.shadow.camera.visible = true
+		this.light.shadow.camera.left = 500
+		this.light.shadow.camera.right = -500
+		this.light.shadow.camera.top = 500
+		this.light.shadow.camera.bottom = -500
+		// this.light.shadow.camera.fov = 70
 
 		let target = new THREE.Object3D()
 		target.position.x = 0
@@ -48,6 +58,9 @@ export default class MainLight implements Initializable, LightInterface
 		this.light.target = target
 
 		console.log(this.light)
+
+		// debug
+		// this.scene.add(new THREE.CameraHelper(this.light.shadow.camera))
 	}
 
 	getColor()

@@ -34,6 +34,7 @@ export default class Renderer implements Initializable
 
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMap.type = true;
+		this.renderer.shadowMapSoft = true;
 
 		this.renderer.outputEncoding = THREE.sRGBEncoding
 

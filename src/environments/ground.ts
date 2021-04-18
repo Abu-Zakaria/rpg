@@ -11,9 +11,9 @@ export default class Ground extends Object implements Initializable, Loadable
 	private scene! : Scene;
 	private cannon! : Cannon;
 	private ground_mesh!: any;
-	private width: number = 60;
+	private width: number = 1000;
 	private height: number = 0.2;
-	private depth: number = 60;
+	private depth: number = 1000;
 	isLoaded: boolean = false;
 	onLoadFunc!: any;
 
@@ -45,6 +45,7 @@ export default class Ground extends Object implements Initializable, Loadable
 
 			_this.ground_mesh = new THREE.Mesh(geometry, material)
 
+			_this.ground_mesh.name = "ground"
 			_this.ground_mesh.receiveShadow = true
 			// _this.ground_mesh.castShadow = true
 

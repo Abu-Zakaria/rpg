@@ -15,6 +15,9 @@ export default class Tree extends Object implements Initializable, Loadable
 	public onLoadFunc! : any
 	private tree_1_resource : string = './resources/models/trees/tree_1/tree'
 	private tree_2_resource : string = './resources/models/trees/tree_2/tree'
+	private tree_object! : any;
+
+	private tree_locations : any = [];
 
 	constructor(scene: Scene)
 	{
@@ -50,26 +53,11 @@ export default class Tree extends Object implements Initializable, Loadable
 				obj.scale.y = 0.1
 				obj.scale.z = 0.1
 
-				_this.scene.add(obj)
-			})
+				_this.tree_object = obj
 
-			loader.load(_this.tree_2_resource + '.obj', (obj : any) => {
+				_this.isLoaded = true
 
-				obj.traverse((child : any) => {
-					if(child instanceof THREE.Mesh)
-					{
-						child.castShadow = true
-					}
-				})
-				obj.scale.x = 0.1
-				obj.scale.y = 0.1
-				obj.scale.z = 0.1
-
-				obj.position.x = 20
-
-				_this.scene.add(obj)
-
-
+				if(_this.onLoadFunc) _this.onLoadFunc()
 			})
 		})
 
@@ -81,10 +69,6 @@ export default class Tree extends Object implements Initializable, Loadable
 		// 	tree.scale.z = 10
 
 		// 	_this.scene.add(tree)
-
-		_this.isLoaded = true
-
-		if(_this.onLoadFunc) _this.onLoadFunc()
 	}
 
 	onLoad(func: any)
@@ -96,6 +80,38 @@ export default class Tree extends Object implements Initializable, Loadable
 		else
 		{
 			this.onLoadFunc = func
+		}
+	}
+
+	private setTreesLocation()
+	{
+		let length : number = 100
+		let random_x! : number;
+		let random_z! : number;
+		let area_length : any = { x : 100, z : 100 }
+
+		for(let i: number = 0; i < length; i++)
+		{
+			random_x = (Math.random() * area_length.x) - (area_length.x / 2)
+			random_z = (Math.random() * area_length.z) - (area_length.z / 2)
+
+			this.tree_locations.push(new THREE.Vector3(random_x, 0, random_z))
+		}
+	}
+
+	setupTrees()
+	{
+		console.log("WORKED")
+		this.setTreesLocation()
+		for(let i = 0; i < this.tree_locations.length; i++ )
+		{
+			let location = this.tree_locations[i]
+			let tree = this.tree_object.clone()
+
+			tree.position.set(location.x, location.y, location.z)
+
+			this.scene.add(tree)
+			console.log('tree', tree)
 		}
 	}
 }

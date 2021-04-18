@@ -26,6 +26,9 @@ module.exports = (env) => {
 		output: {
 			filename: 'bundle.js',
 			path: path.resolve(__dirname, 'public')
+		},
+		watchOptions: {
+			ignored: [path.resolve(__dirname, 'node_modules')]
 		}
 	}
 }
